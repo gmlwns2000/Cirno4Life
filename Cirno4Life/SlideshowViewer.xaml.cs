@@ -70,6 +70,7 @@ namespace Cirno4Life
             if (DirectoryInfo.Exists)
             {
                 var files = DirectoryInfo.GetFiles();
+                imageList.Clear();
                 foreach(var fi in files)
                 {
                     if (IsImage(fi.FullName))
@@ -100,6 +101,9 @@ namespace Cirno4Life
 
         public void Next()
         {
+            slideUpdater.Stop();
+            slideUpdater.Start();
+
             UpdateList();
 
             if (imageList.Count > 0)

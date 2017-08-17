@@ -4,9 +4,53 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Cirno4Life"
+        xmlns:cnvt ="clr-namespace:Cirno4Life.ValueConverters"
         mc:Ignorable="d"
-        Title="Settings" Height="300" Width="300">
+        Title="Settings" Width="300" SizeToContent="Height" ResizeMode="NoResize" Icon="cirno.ico" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ResourceDictionary>
+            <cnvt:IndexToHorizontalAlignment x:Key="horizontalAlignment"/>
+            <cnvt:IndexToVerticalAlignment x:Key="verticalAlignment"/>
+            <cnvt:TextToTimeSpanMS x:Key="textMillisec"/>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
-        
+        <StackPanel Margin="15,10">
+            <Grid Margin="0,3">
+                <TextBlock Text="Opacity" VerticalAlignment="Center"/>
+                <Slider Margin="140,0,0,0" Value="{Binding Opacity}" Maximum="1" Minimum="0.1" SmallChange="0.05" LargeChange="0.1"/>
+            </Grid>
+            <Grid Margin="0,3">
+                <TextBlock Text="Horizontal Alignment" VerticalAlignment="Center"/>
+                <ComboBox Margin="140,0,0,0" SelectedIndex="{Binding ImageHorizontalAlignment, Converter={StaticResource horizontalAlignment}}">
+                    <ComboBoxItem Content="Left"/>
+                    <ComboBoxItem Content="Center"/>
+                    <ComboBoxItem Content="Right"/>
+                </ComboBox>
+            </Grid>
+            <Grid Margin="0,3">
+                <TextBlock Text="Vertical Alignment" VerticalAlignment="Center"/>
+                <ComboBox Margin="140,0,0,0" SelectedIndex="{Binding ImageVerticalAlignment, Converter={StaticResource verticalAlignment}}">
+                    <ComboBoxItem Content="Top"/>
+                    <ComboBoxItem Content="Center"/>
+                    <ComboBoxItem Content="Bottom"/>
+                </ComboBox>
+            </Grid>
+            <Grid Margin="0,3">
+                <TextBlock Text="Interval" VerticalAlignment="Center"/>
+                <TextBox Text="{Binding SlideInterval, Converter={StaticResource textMillisec}}" Height="24" Margin="140,0,0,0" VerticalContentAlignment="Center"/>
+                <TextBlock Text="ms" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="6,0" Opacity="0.66" IsHitTestVisible="False"/>
+            </Grid>
+            <Grid Margin="0,3">
+                <TextBlock Text="FadeIn" VerticalAlignment="Center"/>
+                <TextBox Text="{Binding SlideFadeIn, Converter={StaticResource textMillisec}}" Height="24" Margin="140,0,0,0" VerticalContentAlignment="Center"/>
+                <TextBlock Text="ms" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="6,0" Opacity="0.66" IsHitTestVisible="False"/>
+            </Grid>
+            <Grid Margin="0,3">
+                <TextBlock Text="FadeOut" VerticalAlignment="Center"/>
+                <TextBox Text="{Binding SlideFadeOut, Converter={StaticResource textMillisec}}" Height="24" Margin="140,0,0,0" VerticalContentAlignment="Center"/>
+                <TextBlock Text="ms" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="6,0" Opacity="0.66" IsHitTestVisible="False"/>
+            </Grid>
+        </StackPanel>
     </Grid>
 </Window>

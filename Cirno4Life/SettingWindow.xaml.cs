@@ -21,7 +21,16 @@ namespace Cirno4Life
     {
         public SettingWindow()
         {
+            DataContext = Settings.Current;
+
             InitializeComponent();
+
+            Closed += SettingWindow_Closed;
+        }
+
+        private void SettingWindow_Closed(object sender, EventArgs e)
+        {
+            Settings.Save();
         }
     }
 }

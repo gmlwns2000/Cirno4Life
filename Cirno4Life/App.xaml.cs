@@ -13,5 +13,9 @@ namespace Cirno4Life
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            Settings.Load();
+        }
     }
 }

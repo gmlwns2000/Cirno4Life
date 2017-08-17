@@ -28,9 +28,19 @@ namespace Cirno4Life
         public event EventHandler Nexted;
 
         public DirectoryInfo DirectoryInfo { get; set; }
-        public TimeSpan Interval { get; set; } = Settings.Current.SlideInterval;
-        public TimeSpan FadeOut { get; set; } = Settings.Current.SlideFadeOut;
-        public TimeSpan FadeIn { get; set; } = Settings.Current.SlideFadeIn;
+        private TimeSpan _interval = TimeSpan.FromMilliseconds(3500);
+        public TimeSpan Interval
+        {
+            get => _interval;
+            set
+            {
+                _interval = value;
+                if(slideUpdater != null)
+                    slideUpdater.Interval = value;
+            }
+        }
+        public TimeSpan FadeOut { get; set; } = TimeSpan.FromMilliseconds(500);
+        public TimeSpan FadeIn { get; set; } = TimeSpan.FromMilliseconds(500);
 
         private ImageRenderer image;
         private DispatcherTimer slideUpdater;

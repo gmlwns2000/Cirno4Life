@@ -6,5 +6,5 @@
              xmlns:local="clr-namespace:Cirno4Life"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Image x:Name="Image"/>
+    <Image x:Name="Image" Stretch="Uniform"/>
 </UserControl>

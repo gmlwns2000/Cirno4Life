@@ -35,41 +35,34 @@ namespace Cirno4Life
                 WindowStyle = WindowStyle.ToolWindow,
                 ShowInTaskbar = false,
                 ShowActivated = false,
-                Left = -213213,
-                Top = -2312312,
+                Left = -100000,
+                Top = -100000,
             };
             parent.Show();
             Owner = parent;
 
             InitSlideShow();
-
             InitNotify();
-
-            Settings.Current.PropertyChanged += Current_PropertyChanged;
             InitSettings();
 
             SizeChanged += OnSizeChanged;
             SourceInitialized += MainWindow_SourceInitialized;
             Closed += MainWindow_Closed;
+
+            SlideShow.Start();
         }
 
-        private void MainWindow_Closed(object sender, EventArgs e)
-        {
-            Settings.Save();
-            Environment.Exit(0);
-        }
-
-        private void MainWindow_SourceInitialized(object sender, EventArgs e)
-        {
-            WinApi.SetTransClick(this);
-        }
+        #region Initializers
 
         private void InitSettings()
         {
+            Settings.Current.PropertyChanged += Current_PropertyChanged;
+
             Opacity = Settings.Current.Opacity;
             SlideShow.FadeIn = Settings.Current.SlideFadeIn;
             SlideShow.FadeOut = Settings.Current.SlideFadeOut;
             SlideShow.Interval = Settings.Current.SlideInterval;
+            SlideShow.MaxSize = Settings.Current.ImageMaxSize;
         }
 
         private void Current_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -94,6 +87,9 @@ namespace Cirno4Life
                 case nameof(Settings.SlideInterval):
                     SlideShow.Interval = Settings.Current.SlideInterval;
                     break;
+                case nameof(Settings.ImageMaxSize):
+                    SlideShow.MaxSize = Settings.Current.ImageMaxSize;
+                    break;
             }
         }
 
@@ -104,7 +100,6 @@ namespace Cirno4Life
                 di.Create();
 
             SlideShow = new SlideshowViewer(di);
-            SlideShow.Start();
             Grid_Root.Children.Add(SlideShow);
         }
 
@@ -120,6 +115,10 @@ namespace Cirno4Life
                 icon.Icon = System.Drawing.SystemIcons.Error;
 
             var menu = new System.Windows.Forms.ContextMenu();
+
+            var next = new System.Windows.Forms.MenuItem("Next");
+            next.Click += (o, s) => SlideShow.Next();
+            menu.MenuItems.Add(next);
             
             var settings = new System.Windows.Forms.MenuItem("Settings");
             settings.Click += delegate
@@ -142,10 +141,26 @@ namespace Cirno4Life
             exit.Click += (o, s) => Close();
             menu.MenuItems.Add(exit);
 
-            icon.DoubleClick += (o, s) => settings.PerformClick();
+            icon.Click += (o, s) => SlideShow.Next();
+            icon.Text = "Cirno4Life : Animated Gif Widget";
             icon.ContextMenu = menu;
             icon.Visible = true;
             icon.ShowBalloonTip(1, "test", "test", ToolTipIcon.None);
+        }
+
+        #endregion Initializers
+
+        #region Events
+
+        private void MainWindow_Closed(object sender, EventArgs e)
+        {
+            Settings.Save();
+            Environment.Exit(0);
+        }
+
+        private void MainWindow_SourceInitialized(object sender, EventArgs e)
+        {
+            WinApi.SetTransClick(this);
         }
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
@@ -180,5 +195,7 @@ namespace Cirno4Life
                     break;
             }
         }
+
+        #endregion Events
     }
 }

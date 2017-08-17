@@ -71,6 +71,7 @@
     </Compile>
     <Compile Include="ValueConverters\IndexToHorizontalAlignment.cs" />
     <Compile Include="ValueConverters\IndexToVerticalAlignment.cs" />
+    <Compile Include="ValueConverters\TextToDouble.cs" />
     <Compile Include="ValueConverters\TextToTimeSpanMS.cs" />
     <Compile Include="WinApi.cs" />
     <Page Include="MainWindow.xaml">

@@ -20,6 +20,8 @@ namespace Cirno4Life
     /// </summary>
     public partial class ImageRenderer : UserControl
     {
+        public BitmapImage ImageSource { get; set; }
+
         private string path;
         public string FilePath
         {
@@ -30,15 +32,19 @@ namespace Cirno4Life
                 {
                     path = value;
 
-                    var img = new BitmapImage();
-                    img.BeginInit();
-                    img.UriSource = new Uri(path);
-                    img.EndInit();
+                    ImageSource = new BitmapImage();
+                    ImageSource.BeginInit();
+                    ImageSource.UriSource = new Uri(path);
+                    ImageSource.EndInit();
 
-                    Width = img.Width;
-                    Height = img.Height;
-
-                    WpfAnimatedGif.ImageBehavior.SetAnimatedSource(Image, img);
+                    if (path.ToLower().EndsWith(".gif"))
+                    {
+                        WpfAnimatedGif.ImageBehavior.SetAnimatedSource(Image, ImageSource);
+                    }
+                    else
+                    {
+                        Image.Source = ImageSource;
+                    }
                 }
             }
         }

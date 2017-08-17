@@ -41,6 +41,7 @@ namespace Cirno4Life
         }
         public TimeSpan FadeOut { get; set; } = TimeSpan.FromMilliseconds(500);
         public TimeSpan FadeIn { get; set; } = TimeSpan.FromMilliseconds(500);
+        public double MaxSize { get; set; } = 6000000;
 
         private ImageRenderer image;
         private DispatcherTimer slideUpdater;
@@ -124,6 +125,16 @@ namespace Cirno4Life
                     HorizontalAlignment = Settings.Current.ImageHorizontalAlignment,
                     VerticalAlignment = Settings.Current.ImageVerticalAlignment
                 };
+
+                image.Width = image.ImageSource.Width;
+                image.Height = image.ImageSource.Height;
+
+                var scale = Math.Max(image.Width / MaxSize, image.Height / MaxSize);
+                if (scale > 1)
+                {
+                    image.Width /= scale;
+                    image.Height /= scale;
+                }
 
                 Storyboard fadeIn = ConstructFadeIn(image, FadeIn);
                 fadeIn.Begin();

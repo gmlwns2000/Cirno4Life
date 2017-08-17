@@ -62,6 +62,13 @@ namespace Cirno4Life
             set { _imageVerticalAlignment = value; OnPropertyChanged(); }
         }
 
+        private double _imageMaxSize = 600;
+        public double ImageMaxSize
+        {
+            get => _imageMaxSize;
+            set { _imageMaxSize = value; OnPropertyChanged(); }
+        }
+
         private TimeSpan _slideInterval = TimeSpan.FromMilliseconds(6500);
         [XmlIgnore]
         public TimeSpan SlideInterval

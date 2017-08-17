@@ -12,6 +12,7 @@
             <cnvt:IndexToHorizontalAlignment x:Key="horizontalAlignment"/>
             <cnvt:IndexToVerticalAlignment x:Key="verticalAlignment"/>
             <cnvt:TextToTimeSpanMS x:Key="textMillisec"/>
+            <cnvt:TextToDouble x:Key="textDouble"/>
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
@@ -19,6 +20,11 @@
             <Grid Margin="0,3">
                 <TextBlock Text="Opacity" VerticalAlignment="Center"/>
                 <Slider Margin="140,0,0,0" Value="{Binding Opacity}" Maximum="1" Minimum="0.1" SmallChange="0.05" LargeChange="0.1"/>
+            </Grid>
+            <Grid Margin="0,3">
+                <TextBlock Text="MaxSize" VerticalAlignment="Center"/>
+                <TextBox Text="{Binding ImageMaxSize, Converter={StaticResource textDouble}}" Height="24" Margin="140,0,0,0" VerticalContentAlignment="Center"/>
+                <TextBlock Text="px" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="6,0" Opacity="0.66" IsHitTestVisible="False"/>
             </Grid>
             <Grid Margin="0,3">
                 <TextBlock Text="Horizontal Alignment" VerticalAlignment="Center"/>

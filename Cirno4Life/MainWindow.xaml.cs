@@ -35,6 +35,7 @@ namespace Cirno4Life
                 WindowStyle = WindowStyle.ToolWindow,
                 ShowInTaskbar = false,
                 ShowActivated = false,
+                Topmost = true,
                 Left = -100000,
                 Top = -100000,
             };
@@ -117,7 +118,10 @@ namespace Cirno4Life
             var menu = new System.Windows.Forms.ContextMenu();
 
             var next = new System.Windows.Forms.MenuItem("Next");
-            next.Click += (o, s) => SlideShow.Next();
+            next.Click += (o, s) =>
+            {
+                SlideShow.Next();
+            };
             menu.MenuItems.Add(next);
             
             var settings = new System.Windows.Forms.MenuItem("Settings");
@@ -141,7 +145,7 @@ namespace Cirno4Life
             exit.Click += (o, s) => Close();
             menu.MenuItems.Add(exit);
 
-            icon.Click += (o, s) => SlideShow.Next();
+            icon.MouseDown += (o, s) => SlideShow.Next();
             icon.Text = "Cirno4Life : Animated Gif Widget";
             icon.ContextMenu = menu;
             icon.Visible = true;
